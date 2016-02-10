@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Phaser - Scroller game, part 01</title>
+    <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update : update });
+            var player;
+            var cursors;
+            var map;
+            var layer;
+
+            function preload () {
+                game.load.crossOrigin = true
+                game.load.tilemap('map', 'http://examples.phaser.io/assets/tilemaps/csv/catastrophi_level2.csv', null, Phaser.Tilemap.CSV);
+                game.load.image('tiles', 'http://i.imgur.com/uxu1fnk.png');
+                game.load.spritesheet("dude", "http://i.imgur.com/70VF89Q.png",32,48);
+            }
+
+            function create () {
+                game.physics.startSystem(Phaser.Physics.ARCADE);
+                map = game.add.tilemap('map',16,16);
+                map.addTilesetImage('tiles');
+                map.setCollision(0);
+                layer = map.createLayer(0);
+                layer.debug = true;
+                player = game.add.sprite(32,40, 'dude');
+                game.physics.enable(player);
+                game.stage.disableVisibilityChange = true;
+                cursors = game.input.keyboard.createCursorKeys();
+            }
+
+            function update() {
+                game.physics.arcade.collide(player,layer);
+            }
+     
+
+	 
+</script>
+
+</body>
+</html>
